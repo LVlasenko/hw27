@@ -8,37 +8,104 @@
 
 //4 *) При перезагрузке страницы отфильтрованный ряд остается.
 
-Vue.component('color-block', {
-    props: ['blockColor'],
+Vue.component('Diagram', {
     data() {
         return {
-            blockHeight: 100
+            blockList: [
+                {
+                    id: 1,
+                    blockColor: 'rgb(221, 163, 171)',
+                    blockHeight: 100
+                },
+                {
+                    id: 2,
+                    blockColor: 'rgb(138, 177, 214)',
+                    blockHeight: 100
+                },
+                {
+                    id: 3,
+                    blockColor: 'rgb(224, 170, 107)',
+                    blockHeight: 100
+                },
+                {
+                    id: 4,
+                    blockColor: 'rgb(132, 167, 104)',
+                    blockHeight: 100
+                },
+                {
+                    id: 5,
+                    blockColor: 'rgb(175, 128, 202)',
+                    blockHeight: 100
+                },
+                {
+                    id: 6,
+                    blockColor: 'rgb(241, 183, 188)',
+                    blockHeight: 100
+                },
+                {
+                    id: 7,
+                    blockColor: 'rgb(52, 135, 212)',
+                    blockHeight: 100
+                }
+            ]
         }
     },
     methods: {
-        change() {
-            this.blockHeight = this.$el.children[1].value;
-        },
-    },
-    watch: {
-        blockHeight(newRange) {
-          localStorage.blockHeight = newRange;
+        setLocalStore() {
+            localStorage.setItem('storeData', JSON.stringify(this.blockList));//без this не сохраняет изменения, не понимает какой блоклист
         }
     },
     template: `
-        <div class="container">
-            <div class="block" 
-                :style="{
-                    background: blockColor, 
-                    height: blockHeight + 'px'
-                }"
-            ></div>
-            <input type="range" min="100" max="300"
-                v-model="blockHeight"  
-                v-on:input="change()">
-        </div>`
+        <div class="diagram">
+            <blocks 
+                v-for='item in blockList'
+                :renderBlock='item'
+                :key='item.id'
+                @sendBlockHeight='setLocalStore'
+            />
+        </div>
+    `,
+    mounted() {
+        const dataFromStore = localStorage.getItem('storeData');
+        console.log(dataFromStore);
+        // if(dataFromStore) {
+        //     this.blockList = JSON.parse(dataFromStore);
+        // } else {
+        //     this.blockList = storeData;
+        // }
+        this.blockList = (dataFromStore) ? JSON.parse(dataFromStore) : [];
+    }
 })
 
-var app = new Vue({
+Vue.component('Blocks', {
+    props: ['renderBlock'],
+    methods: {
+        sendBlockHeight() {
+            this.$emit('sendBlockHeight')
+        }
+    },
+    template: `
+        <div class='color-block'>
+            <div
+                class='block'
+                :style='{ 
+                    height: this.renderBlock.blockHeight + "px",
+                    backgroundColor: this.renderBlock.blockColor
+                }'
+            ></div>    
+            <input 
+                type='range' 
+                min='100' 
+                max='300'
+                v-model='renderBlock.blockHeight'  
+                @change='sendBlockHeight'
+            >
+        </div>
+        
+    `
+});
+
+const app = new Vue({
     el: '#app',
 })
+

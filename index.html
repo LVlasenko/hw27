@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <style>
     body {
@@ -14,7 +13,7 @@
     #app {
         max-width: 1000px;
     }
-    .container {
+    .color-block {
         display: inline-block;
         padding: 60px 20px 0;
     }
@@ -25,28 +24,10 @@
 </style>
 <body>
     <div id="app">
-		<color-block 
-			block-color="rgb(221, 163, 171)"
-		></color-block>
-		<color-block 
-			block-color="rgb(138, 177, 214)"
-		></color-block>
-		<color-block 
-			block-color="rgb(224, 170, 107)"
-		></color-block>
-		<color-block 
-			block-color="rgb(132, 167, 104)"
-		></color-block>
-		<color-block 
-			block-color="rgb(175, 128, 202)"
-		></color-block>
-		<color-block 
-			block-color="rgb(241, 183, 188)"
-		></color-block>
-		<color-block 
-			block-color="rgb(52, 135, 212)"
-		></color-block>
+        <diagram />
 	</div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src='./data.js'></script>
 <script src='./main.js'></script>
 </html>
