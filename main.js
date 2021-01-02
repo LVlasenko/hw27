@@ -73,7 +73,7 @@ Vue.component('Diagram', {
         // } else {
         //     this.blockList = storeData;
         // }
-        this.blockList = (dataFromStore) ? JSON.parse(dataFromStore) : [];
+        this.blockList = (dataFromStore) ? JSON.parse(dataFromStore) : storeData;
     }
 })
 
