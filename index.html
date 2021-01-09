@@ -13,13 +13,26 @@
     #app {
         max-width: 1000px;
     }
+    .diagram {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+    
     .color-block {
-        display: inline-block;
-        padding: 60px 20px 0;
+        padding: 60px 20px 0;   
     }
 
     input, .block {
         width: 75px;
+    }
+
+    .sortBtn {
+        position: absolute;
+        left: 50%;
+        margin-top: 25px;
+        transform: translateX(-50%);
+        width: 50px;
     }
 </style>
 <body>
@@ -27,7 +40,7 @@
         <diagram />
 	</div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src='./data.js'></script>
 <script src='./main.js'></script>
 </html>

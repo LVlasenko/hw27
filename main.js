@@ -11,48 +11,17 @@
 Vue.component('Diagram', {
     data() {
         return {
-            blockList: [
-                {
-                    id: 1,
-                    blockColor: 'rgb(221, 163, 171)',
-                    blockHeight: 100
-                },
-                {
-                    id: 2,
-                    blockColor: 'rgb(138, 177, 214)',
-                    blockHeight: 100
-                },
-                {
-                    id: 3,
-                    blockColor: 'rgb(224, 170, 107)',
-                    blockHeight: 100
-                },
-                {
-                    id: 4,
-                    blockColor: 'rgb(132, 167, 104)',
-                    blockHeight: 100
-                },
-                {
-                    id: 5,
-                    blockColor: 'rgb(175, 128, 202)',
-                    blockHeight: 100
-                },
-                {
-                    id: 6,
-                    blockColor: 'rgb(241, 183, 188)',
-                    blockHeight: 100
-                },
-                {
-                    id: 7,
-                    blockColor: 'rgb(52, 135, 212)',
-                    blockHeight: 100
-                }
-            ]
+            blockList: [],
         }
     },
     methods: {
+        sortBlocks() {
+            this.blockList.sort((a, b) => a.blockHeight - b.blockHeight);
+            this.setLocalStore();
+            console.log('sort');
+        },
         setLocalStore() {
-            localStorage.setItem('storeData', JSON.stringify(this.blockList));//без this не сохраняет изменения, не понимает какой блоклист
+            localStorage.setItem('blockList', JSON.stringify(this.blockList));//без this не сохраняет изменения, не понимает какой блоклист
         }
     },
     template: `
@@ -63,17 +32,24 @@ Vue.component('Diagram', {
                 :key='item.id'
                 @sendBlockHeight='setLocalStore'
             />
+            </br>
+            <button 
+                class='sortBtn'
+                @click='sortBlocks'
+            >Sort</button> 
+
         </div>
+
+          
     `,
     mounted() {
-        const dataFromStore = localStorage.getItem('storeData');
-        console.log(dataFromStore);
+        const dataFromStore = localStorage.getItem('blockList');
         // if(dataFromStore) {
         //     this.blockList = JSON.parse(dataFromStore);
         // } else {
-        //     this.blockList = storeData;
+        //     this.blockList = blockList;
         // }
-        this.blockList = (dataFromStore) ? JSON.parse(dataFromStore) : storeData;
+        this.blockList = (dataFromStore) ? JSON.parse(dataFromStore) : blockList;
     }
 })
 
